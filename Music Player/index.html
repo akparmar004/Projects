@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sambhadne</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" integrity="sha512-PgQMlq+nqFLV4ylk1gwUOgm6CtIIXkKwaIHp/PAIWHzig/lKZSEGKEysh0TCVbHJXCLN7WetD8TFecIky75ZfQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="main-div">
+        <div class="music-container">
+            <h2 id="title">Kar gayi chul</h2>
+            <h3 id="artist">Alia Bhatt</h3>
+            <div class="img-container">
+                <img src="media/headphones-g41e68ee41_1280.png" alt="Sambhadne">
+            </div>
+            <audio src="media/song-1.mp3" ></audio>
+
+            <!-- controls -->
+
+            <div class="music-controls">
+                <i class="fas fa-backward" id="previous" title="previous"></i>
+                <i class="fas fa-play main-button" id="play" title="play"></i>
+                <i class="fas fa-forward" id="next" title="Next"></i>
+            </div>
+        </div>
+    </div>
+    <script>
+        const music = document.querySelector('audio');
+        const img = document.querySelector('img');
+        const play = document.getElementById('play');
+        const artist = document.getElementById('artist');
+        const title = document.getElementById('title');
+        const previous = document.getElementById('previous');
+        const next = document.getElementById('next');
+
+        const songs = [{
+            name:"song-1",
+            title:"Kar gayi chul",
+            artist:"Alia Bhatt",
+        },
+        {
+            name:"song-2",
+            title:"Raaz-Reboot",
+            artist:"Imran Hashmi",
+        },
+        {
+            name:"song-3",
+            title:"Ok Jaanu",
+            artist:"Shraddha Kapoor",
+        },
+        ];
+
+        let isPlaying = false; 
+         //for play function
+        const playMusic = () =>{
+            isPlaying = true;
+            music.play();
+            play.classList.replace('fa-play',"fa-pause");
+            img.classList.add("anime");
+        };
+        
+        //for pause function
+        const pauseMusic =  () =>{
+            isPlaying = false;
+            music.pause();
+            play.classList.replace("fa-pause","fa-play");
+            img.classList.remove("anime");
+        };
+
+        play.addEventListener('click', () =>{
+      
+            isPlaying ? pauseMusic() : playMusic();
+        });
+
+
+        //Changing the music data
+
+        const loadSong = (songs) =>{
+            title.textContent = songs.title;
+            artist.textContent = songs.artist;
+            music.src = "media/" + songs.name +".mp3";
+        };
+
+        songIndex = 0;
+        
+
+        const nextSong = () =>{
+            songIndex = (songIndex + 1) % songs.length;
+            loadSong(songs[songIndex]);
+            playMusic();
+        }
+        const previousSong = () =>{
+            songIndex = (songIndex - 1 + songs.length) % songs.length;
+            loadSong(songs[songIndex]);
+            playMusic();
+        }
+        next.addEventListener('click',nextSong);
+        previous.addEventListener('click',previousSong);
+    </script>
+</body>
+</html>
